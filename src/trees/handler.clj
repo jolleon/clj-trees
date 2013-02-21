@@ -61,7 +61,7 @@
 
 (defroutes app-routes
   (GET "/species" [] (generate-string species-with-counts-ordered))
-  (GET "/trees/:s" [s] (generate-string (trees-for-species s)))
+  (GET "/trees/:s" [s] (generate-string (apply concat (map trees-for-species (clojure.string/split s #"&")))))
   (GET "/tree/:i" [i] "coming soon")
   (route/not-found "Not Found"))
 
