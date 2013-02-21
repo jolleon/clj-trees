@@ -14,9 +14,23 @@
 
 (def trees (all_json "data"))
 
-;; species list
+;; column access
 
+; read-string throws NPE for missing (nil) fields
+(def saferead #(if (not (nil? %)) (read-string %)))
+
+; read a number field
+(def col #(saferead (%2 %1)))
+
+(def id (partial col 8))
 (def species #(% 10))
+(def address #(% 11))
+(def date #(% 17))
+(def size #(% 19))
+(def lat (partial col 23))
+(def lng (partial col 24))
+
+;; species list
 
 (def all-species (set (map species trees)))
 
@@ -30,17 +44,25 @@
 
 ;; trees
 
-(def lat-lng-id #(vector (read-string (% 23)) (read-string (% 24)) (% 0)))
+(defn lat-lng-id [tree]
+    (if (lat tree) ; verifying that the lat is not nil
+        [(lat tree) (lng tree) (id tree)]
+    )
+)
 
 (defn trees-for-species [s]
-    (map lat-lng-id (filter-species s))
+    (filter (comp not nil?)
+        (map lat-lng-id (filter-species s))
+    )
 )
+
 
 ; app
 
 (defroutes app-routes
   (GET "/species" [] (generate-string species-with-counts-ordered))
   (GET "/trees/:s" [s] (generate-string (trees-for-species s)))
+  (GET "/tree/:i" [i] "coming soon")
   (route/not-found "Not Found"))
 
 (def app
