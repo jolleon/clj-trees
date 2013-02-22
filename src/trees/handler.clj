@@ -2,10 +2,10 @@
   (:use compojure.core)
   (:use [ring.adapter.jetty :only [run-jetty]])
   (:require [compojure.handler :as handler]
-            [compojure.route :as route]))
-
-(require '[cheshire.core :refer :all])
-(require 'clojure.java.io)
+            [compojure.route :as route]
+            [cheshire.core :refer :all]
+            [clojure.java.io]
+  ))
 
 
 ;; reading file
@@ -32,15 +32,9 @@
 
 ;; species list
 
-(def all-species (set (map species trees)))
+(def species-with-counts (frequencies (map species trees)))
 
-(defn filter-species [s]
-    (filter #(= s (species %)) trees)
-)
-
-(def species-with-counts (map #(vector % (count (filter-species %))) all-species)) 
-
-(def species-with-counts-ordered (reverse (sort-by second species-with-counts)))
+(def species-with-counts-ordered (reverse (sort-by val species-with-counts)))
 
 ;; trees
 
@@ -48,6 +42,10 @@
     (if (lat tree) ; verifying that the lat is not nil
         [(lat tree) (lng tree) (id tree)]
     )
+)
+
+(defn filter-species [s]
+    (filter #(= s (species %)) trees)
 )
 
 (defn trees-for-species [s]

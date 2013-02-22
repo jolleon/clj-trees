@@ -90,3 +90,19 @@ vals
 (contains? (concat [4 5 6]) 2)
 (contains? (concat [4 5 6]) 5)
 (doc concat)
+specii
+(frequencies (map species trees))
+(count (frequencies (map species trees)))
+(use 'trees.handler)
+(use 'trees.handler :reload :all)
+(read-string ((trees 11) 10))
+(use 'trees.handler :reload)
+species-with-counts
+species-with-counts-ordered
+(count species-with-counts-ordered)
+type
+(type species-with-counts-ordered)
+(use 'trees.handler :reload)
+generate-string
+(use 'cheshire.core)
+(generate-string species-with-counts-ordered)
