@@ -1,19 +1,13 @@
 # trees
 
-FIXME
+Backend app for [Yelp Clojure class assignment 2][1]
+This provides REST access to a dataset of all the trees of San Francisco!
 
-## Prerequisites
+Data comes from: https://data.sfgov.org/Public-Works/Street-Tree-List/tkzw-k3nq
 
-You will need [Leiningen][1] 1.7.0 or above installed.
+The app provides 2 endpoints:
+/species gives a list of all the species with their count (sorted by decreasing frequency)
+/trees/<species>&<other species>&...  gives a list of coordinates of all the trees of any of the given species
 
-[1]: https://github.com/technomancy/leiningen
+[1]: https://trac.yelpcorp.com/wiki/Clojure/Assignment2
 
-## Running
-
-To start a web server for the application, run:
-
-    lein ring server
-
-## License
-
-Copyright © 2013 FIXME
