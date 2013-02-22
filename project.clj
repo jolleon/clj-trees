@@ -1,7 +1,7 @@
 (defproject trees "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
-  :jvm-opts ["-Xmx400M"] 
+  :jvm-opts ["-Xmx200M"]
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [ring/ring-jetty-adapter "1.1.0"]
                  [cheshire "5.0.2"]
